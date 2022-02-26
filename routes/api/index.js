@@ -32,7 +32,7 @@ router.post('/notes', (req, res) => {
 
     
     db.push(newNote);
-    fs.writeFileSync(path.resolve(__dirname, '../../db/db.json'), JSON.stringify(newNote));
+    fs.writeFileSync('../../db/db.json', newNote), JSON.stringify(newNote);
     //use fs to rewrite database 
 
    res.json(db)
