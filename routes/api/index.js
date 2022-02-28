@@ -30,6 +30,7 @@ router.post('/notes', (req, res) => {
 })
 
 //DELETE route 
+
 router.delete('/notes/*', (req, res) => {
     const id = req.params["0"];
     readFromFile('db/db.json').then((data) => {
@@ -42,7 +43,8 @@ router.delete('/notes/*', (req, res) => {
             }
         }
     });
-    returnJson(res);
+    return res.json(actualData)
+    //returnJson(res);
 });
 
 function returnJson(res) {
