@@ -1,6 +1,5 @@
 const router = require('express').Router();
 const fs = require('fs');
-const db = require('../../db/db.json')
 const util = require('util');
 const { v4: uuidv4 } = require('uuid');
 
@@ -24,15 +23,17 @@ router.post('/notes', (req, res) => {
         id: uuidv4()
     };
 
-    noteList.push(newNote);
-    writeToJson(noteList);
-    res.json(db)
+    readFromFile('db/db.json').then((data) => {
+        let jsonData = JSON.parse(data)
+        jsonData.push(newNote);
+        writeToJson(jsonData);
+        returnJson(res);
+    })
 })
 
 //DELETE route 
-
-router.delete('/notes/*', (req, res) => {
-    const id = req.params["0"];
+router.delete('/notes/:id', (req, res) => {
+    const id = req.params['id'];
     readFromFile('db/db.json').then((data) => {
         let actualData = JSON.parse(data);
         for (let i = 0; i < actualData.length; i++) {
@@ -43,8 +44,7 @@ router.delete('/notes/*', (req, res) => {
             }
         }
     });
-    return res.json(actualData)
-    //returnJson(res);
+    returnJson(res);
 });
 
 function returnJson(res) {
@@ -52,16 +52,12 @@ function returnJson(res) {
 }
 
 function writeToJson(notes) {
-    fs.writeFile('db/db.json', JSON.stringify(notes), function (err) {
+    fs.writeFileSync('db/db.json', JSON.stringify(notes), function (err) {
         if (err) {
             return console.log(err);
         }
         console.log('file was saved');
     })
 }
-
-db.forEach(element => {
-    noteList.push(element);
-});
 
 module.exports = router;
