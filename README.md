@@ -2,7 +2,7 @@
 Use this application to help yourself create a to-do list, take notes, or any other list-related activities. 
 
 ## Instructions
-To use: [Visit the website](https://todo-list-note-taker-app.herokuapp.com/notes)
+To use: [Visit the website](https://todo-list-note-taker-app.herokuapp.com/)
 
 ## Sample
 ![Note Taker Sample](public/assets/images/sample-note-taker.png)
